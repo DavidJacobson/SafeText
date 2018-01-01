@@ -47,14 +47,17 @@ parser.add_argument('input', metavar='I', help='File to be cleaned')
 args = parser.parse_args()
 out_file_name = args.input + ".safe"
 print("[*] Cleaning {} to {} ...".format(args.input, out_file_name))
-out_file = open(out_file_name, "w")
+out_file = open(out_file_name, mode="w", encoding="UTF-8")
 with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
     lines = in_file.readlines()  # Read the lines into memory
     for index, line in enumerate(lines):  # Use enum so we can keep track of the lines
         for character in ZERO_WIDTH_CHARS:  # Checking starts here
             if ZERO_WIDTH_CHARS[character] in line:
-                print("FOUND a {} ON LINE # {}".format(character, index+1))  # +1 so it's human readable
+                print("[!] FOUND a {} ON LINE # {}".format(character, index+1))  # +1 so it's human readable
                 line = line.replace(ZERO_WIDTH_CHARS[character], "")
+        for character in HOMOGLYPHS:
+            if HOMOGLYPHS[character] in line:
+                print("[!] FOUND HOMOGLYPHIC CHARACTER {} ON LINE {}".format(character, index+1))
         for word in COUNTRY_SMELLS:
             if word in line.lower():  # Normalize
                 print("[!] WARNING - Use of spelling ({}) that identifies country on line {}".format(word, index+1))
@@ -63,3 +66,4 @@ with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
 for line in lines:
     out_file.write(line)
 out_file.close()
+print("[*] Output file closed")
