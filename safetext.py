@@ -18,18 +18,56 @@ ZERO_WIDTH_CHARS = {
 # Please note that these are stored with reference to their english counterparts, i.e. CYRILLIC_b may not be the
 # second letter of the Cyrillic alphabet.
 # List built from https://en.wikipedia.org/wiki/IDN_homograph_attack
-HOMOGLYPHS = {
+HOMOGLYPHS = {  # To verify these are Cyrillic characters, enter them into Google with autocomplete
+    # These characters are used in Russian, Belarusian, Ukrainian, Bulgarian, Serbian, Bosnian, Croatian and more
+    # This character set is the most common used in homoglyph fingerprinting as it has the most characters that are
+    # visually similar to their latin counterparts
     "CYRILLIC_a":  u"а",
-    "CYRILLIC_b1": u"ь",  # Small
-    "CYRILLIC_b2": u"Ъ",  # Large
+    "CYRILLIC_small_b": u"ь",
+    "CYRILLIC_large_b": u"Ъ",
     "CYRILLIC_c": u"с",
+    "CYRILLIC_d": u"ԁ",
     "CYRILLIC_e": u"е",
+    "CYRILLIC_small_h": u"һ",
+    "CYRILLIC_large_h": u"Һ",
+    "CYRILLIC_i": u"і",
+    "CYRILLIC_j": u"ј",
     "CYRILLIC_o": u"о",
     "CYRILLIC_p": u"р",
+    "CYRILLIC_s": u"ѕ",
+    "CYRILLIC_small_v": u"ѵ",
+    "CYRILLIC_large_v": u"Ѵ",
     "CYRILLIC_x": u"х",
     "CYRILLIC_y": u"у",
 
     "CYRILLIC_A": u"А",
+    "CYRILLIC_small_B": u"в",
+    "CYRILLIC_large_B": u"В",
+    "CYRILLIC_small_C": u"с",
+    "CYRILLIC_large_C": u"С",
+    "CYRILLIC_E": u"Е",
+    "CYRILLIC_small_F": u"ғ",
+    "CYRILLIC_large_F": u"Ғ",
+    "CYRILLIC_small_G": u"ԍ",
+    "CYRILLIC_large_G": u"Ԍ",
+    "CYRILLIC_small_H": u"н",
+    "CYRILLIC_large_H": u"Н",
+    "CYRILLIC_I": u"І",
+    "CYRILLIC_J": u"Ј",
+    "CYRILLIC_small_K": u"к",
+    "CYRILLIC_large_K": u"К",
+    "CYRILLIC_small_M": u"м",
+    "CYRILLIC_large_M": u"М",
+    "CYRILLIC_small_O": u"о",
+    "CYRILLIC_large_O": u"О",
+    "CYRILLIC_P": u"Р",
+    "CYRILLIC_S": u"Ѕ",
+    "CYRILLIC_small_T": u"т",
+    "CYRILLIC_large_T": u"Т",
+    "CYRILLIC_X": u"Х",
+    "CYRILLIC_Y": u"У",
+
+
 # Todo expand this portion
 }
 
