@@ -3,7 +3,7 @@ Tool to sanitize text to allow for safe distribution of documents from anonymous
 
 Individuals attempting to leak an email or other text file face the risk of identification through fingerprinting.
 Fingerprinting often occurs when the original distributor of the document has embedded some form of a canary.
-For example, Elon Musk's[email](https://web.archive.org/web/20131020092330/http://gawker.com/5164035/tesla-ceo-in-digital-witch-hunt)in 2008 in response to leaks featured slightly different 
+For example, Elon Musk's [email](https://web.archive.org/web/20131020092330/http://gawker.com/5164035/tesla-ceo-in-digital-witch-hunt) in 2008 in response to leaks featured slightly different 
 wording for each employee. This tactic was realized by the employees, and failed. An easier
 tactic that is also employed, is the presence of nearly invisible changes to the text. 
 SafeText is designed to identify and remove these changes.
