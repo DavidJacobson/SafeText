@@ -9,8 +9,27 @@ ZERO_WIDTH_CHARS = {
     "NON-JOINER CODE POINT": u'\u200c',
     "JOINER CODE POINT": u'\u200d',
     "NO BREAK SPACE CODE POINT": u'\uFEFF',
+    "RIGHT LEFT MARK": 	u"\u200F",
+    "LEFT RIGHT MARK": 	u"\u200E",
+
 }
 
+NON_STANDARD_SPACES = {  # These are not zero-width, they are visible. However, they are unique, and need to
+    # be normalized
+    "EN QUAD": u"\u2000",
+    "HAIR SPACE": u"\u200A",
+    "NARROW NO BREAK SPACE": u"\u202F",
+    "MEDIUM MATHEMATICAL SPACE": u"\u205F",
+    "EN SPACE": u"\u2002",
+    "EM SPACE": u"\u2003",
+    "THREE PER EM SPACE": u"\u2004",
+    "FOUR PER EM SPACE": u"\u2005",
+    "SIX PER EM SPACE": u"\u2006",
+    "FIGURE SPACE": u"\u2007",
+    "PUNCTUATION SPACE": u"\u2008",
+    "THIN SPACE": u"\u2009",
+    "<> (IS)": u"\u3000",
+}
 # A list of letters that have identical counterparts from other character sets.
 # Please note that these are stored with reference to their english counterparts, i.e. CYRILLIC_b is not be the
 # second letter of the Cyrillic alphabet, rather it is the Cyrillic character that most resembles the letter 'b'.
