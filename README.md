@@ -20,9 +20,16 @@ Example output is:
 ```shell
 λ python safetext.py TestFile.txt
 [*] Cleaning TestFile.txt to TestFile.txt.safe ...
-[!] FOUND a SPACE ON LINE # 1
-[!] WARNING - Use of spelling (colour) that identifies country on line 2
-[!] FOUND HOMOGLYPHIC CHARACTER CYRILLIC_large_b ON LINE 7
+[!] FOUND HOMOGLYPHIC CHARACTER CYRILLIC_large_H ON LINE 1
+The message said: "(Н)ey, let's hang out!"
+[!] FOUND a SPACE ON LINE # 2
+Lorem*Ipsum*Dolor*Sit
+[!] WARNING - Use of spelling (colour) that identifies country on line 3
+[!] FOUND HOMOGLYPHIC CHARACTER GREEK_B ON LINE 5
+[!] FOUND HOMOGLYPHIC CHARACTER GREEK_C ON LINE 5
+Subject: (Β)udget (Ϲ)uts
 [*] Output file closed
+
 ```
+Note: The relevant characters will be underlined - not enclosed by parentheses. 
 SafeText will output to infile.safe. 
