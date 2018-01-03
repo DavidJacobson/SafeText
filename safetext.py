@@ -8,6 +8,10 @@ import argparse
 from characters_safetext import HOMOGLYPHS, ZERO_WIDTH_CHARS
 
 
+def underline(chars):
+    return '\033[4m' + chars + '\033[0m'
+
+
 # These are words that could fingerprint an author's location
 # Information taken from https://en.oxforddictionaries.com/spelling/british-and-spelling
 COUNTRY_SMELLS = (  # Expand this as well
@@ -21,29 +25,37 @@ parser = argparse.ArgumentParser(description="Clean a text file of any identifyi
 parser.add_argument('input', metavar='I', help='File to be cleaned')
 args = parser.parse_args()
 out_file_name = args.input + ".safe"
-UNDERLINE_START = '\033[4m'
-UNDERLINE_END = '\033[0m'
 print("[*] Cleaning {} to {} ...".format(args.input, out_file_name))
-out_file = open(out_file_name, mode="w", encoding="UTF-8")
+
 with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
     lines = in_file.readlines()  # Read the lines into memory
     for index, line in enumerate(lines):  # Use enum so we can keep track of the lines
-        line_to_display = line
+        line_to_display = line  # This will be the line presented to the user, to highlight what characters were hidden
+        display_line = False
         for character in ZERO_WIDTH_CHARS:  # Checking starts here
             if ZERO_WIDTH_CHARS[character] in line:
+                display_line = True
                 print("[!] FOUND a {} ON LINE # {}".format(character, index+1))  # +1 so it's human readable
-                line = line.replace(ZERO_WIDTH_CHARS[character], "")
-        for character in HOMOGLYPHS:
-            if HOMOGLYPHS[character] in line:
-                print("[!] FOUND HOMOGLYPHIC CHARACTER {} ON LINE {}".format(character, index+1))
-                print(line.replace(HOMOGLYPHS[character], UNDERLINE_START + HOMOGLYPHS[character] + UNDERLINE_END))
-
+                line_to_display = line_to_display.replace(ZERO_WIDTH_CHARS[character], "*")
+                line = line.replace(ZERO_WIDTH_CHARS[character], "")  # To actually remove
+        for letter in HOMOGLYPHS:
+            if HOMOGLYPHS[letter] in line:
+                display_line = True
+                # print(underline(HOMOGLYPHS[character]))
+                print("[!] FOUND HOMOGLYPHIC CHARACTER {} ON LINE {}".format(letter, index+1))
+                line_to_display = line_to_display.replace(HOMOGLYPHS[letter], underline(HOMOGLYPHS[letter]))
+                replacement_char = letter[-1]
+                line = line.replace(HOMOGLYPHS[letter], replacement_char)
+        if display_line:  # If the line had to be modified, print it.
+            print(line_to_display.strip())
 
         for word in COUNTRY_SMELLS:
             if word in line.lower():  # Normalize
                 print("[!] WARNING - Use of spelling ({}) that identifies country on line {}".format(word, index+1))
 
         lines[index] = line  # Update
+
+out_file = open(out_file_name, mode="w", encoding="UTF-8")
 for line in lines:
     out_file.write(line)
 out_file.close()
