@@ -138,8 +138,8 @@ HOMOGLYPHS = {  # To quickly verify that these characters are not Latin, enter t
     "ARMENIAN_S": u"Տ",
 
     "ARMENIAN_2": u"Ձ",
-    "ARMENIAN_ALT_ 2": u"շ",
-    "ARMENIAN_3": u"3",
+    "ARMENIAN_ALT_2": u"շ",
+    "ARMENIAN_3": u"Յ",
     "ARMENIAN_4": u"վ",
 
     # Hebrew Characters
