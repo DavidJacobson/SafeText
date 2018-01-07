@@ -7,7 +7,7 @@
 # David Jacobson
 
 import argparse
-from characters_safetext import HOMOGLYPHS, ZERO_WIDTH_CHARS
+from characters_safetext import HOMOGLYPHS, ZERO_WIDTH_CHARS, NON_STANDARD_SPACES
 
 
 def underline(chars):
@@ -33,7 +33,6 @@ with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
     lines = in_file.readlines()  # Read the lines into memory
     for index, line in enumerate(lines):  # Use enum so we can keep track of the lines
         line_to_display = line  # This will be the line presented to the user, to highlight what characters were hidden
-        display_line = False
         for character in ZERO_WIDTH_CHARS:  # Checking starts here
             if ZERO_WIDTH_CHARS[character] in line:
                 display_line = True
@@ -48,7 +47,12 @@ with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
                 line_to_display = line_to_display.replace(HOMOGLYPHS[letter], underline(HOMOGLYPHS[letter]))
                 replacement_char = letter[-1]
                 line = line.replace(HOMOGLYPHS[letter], replacement_char)
-        if display_line:  # If the line had to be modified, print it.
+        for space in NON_STANDARD_SPACES:
+            if NON_STANDARD_SPACES[space] in line:
+                print("[!] FOUND A NON STANDARD SPACE ON LINE {}".format(index+1))
+                line_to_display = line_to_display.replace(NON_STANDARD_SPACES[space], "*")  # Highlight for display
+                line = line.replace(NON_STANDARD_SPACES[space], " ")  # Normalize
+        if line_to_display != line:  # If the line had to be modified, print it.
             print(line_to_display.strip())
 
         for word in COUNTRY_SMELLS:
