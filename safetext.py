@@ -1,3 +1,5 @@
+# -- coding: utf-8 --
+
 # SafeText
 # This script takes an input of a text file, and removes any characters that could be unique identifiers that would
 # reveal an otherwise confidential source.

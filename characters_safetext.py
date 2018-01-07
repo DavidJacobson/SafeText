@@ -1,3 +1,5 @@
+# -- coding: utf-8 --
+
 # This is a file to store all the characters that SafeText will look out for
 
 # Zero width characters are visible when reading, as they take up no space. However, they can be used in fingerprinting.
