@@ -6,12 +6,24 @@
 # Inspiration https://www.zachaysan.com/writing/2017-12-30-zero-width-characters
 # David Jacobson
 
-import argparse
+import argparse,sys
 from characters_safetext import HOMOGLYPHS, ZERO_WIDTH_CHARS, NON_STANDARD_SPACES
 
 
 def underline(chars):
+    if WIN:
+        return "'{}'".format(chars)
     return '\033[4m' + chars + '\033[0m'
+
+def safe_windows_print(s):
+        try:
+            print(s)
+        except UnicodeEncodeError as e:
+            for c in s:
+                try:
+                    print(c, end = '')
+                except UnicodeEncodeError as d:
+                    print('?', end = '')
 
 
 # These are words that could fingerprint an author's location
@@ -28,6 +40,10 @@ parser.add_argument('input', metavar='I', help='File to be cleaned')
 args = parser.parse_args()
 out_file_name = args.input + ".safe"
 print("[*] Cleaning {} to {} ...".format(args.input, out_file_name))
+
+# get platform once
+WIN = sys.platform == 'win32'
+
 
 with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
     lines = in_file.readlines()  # Read the lines into memory
@@ -53,7 +69,10 @@ with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
                 line_to_display = line_to_display.replace(NON_STANDARD_SPACES[space], "*")  # Highlight for display
                 line = line.replace(NON_STANDARD_SPACES[space], " ")  # Normalize
         if line_to_display != line:  # If the line had to be modified, print it.
-            print(line_to_display.strip())
+            if WIN:
+                safe_windows_print(line_to_display.strip())
+            else:
+                print(line_to_display.strip())
 
         for word in COUNTRY_SMELLS:
             if word in line.lower():  # Normalize
