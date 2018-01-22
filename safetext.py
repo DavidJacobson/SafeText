@@ -9,6 +9,7 @@
 import argparse
 import sys
 from characters_safetext import HOMOGLYPHS, ZERO_WIDTH_CHARS, NON_STANDARD_SPACES
+from unicodedata import normalize
 
 
 def underline(chars):
@@ -28,14 +29,15 @@ def safe_windows_print(s):
                     print('?', end='')
 
 
-# These are words that could fingerprint an author's location
-# Information taken from https://en.oxforddictionaries.com/spelling/british-and-spelling
-COUNTRY_SMELLS = (  # Expand this as well
-    "centre", "fibre", "litre", "theatre", "colour", "flavour", "humour", "labour", "neighbour", "apologise",
-    "organise", "recognise", "analyse", "breathalyse", "paralyse", "travelled", "travelling", "traveller", "paediatric",
-    "oestrogen", "manoeuvre", "leukaemia", "defence", "licence", "offence", "pretence", "analogue", "catalogue",
-    "dialogue", "grey", "tonne", "honour", "cancelled", "jewellery", "mould", "cheque", "pyjamas",
-)
+COUNTRY_SMELLS = {
+    "BRIT_SPELLS": [],
+    "US_SPELLS": [],
+}
+for SPELL_FILE in ["BRIT_SPELLS", "US_SPELLS"]:
+    with open(SPELL_FILE, "r") as WORD_FILE:
+        lines = WORD_FILE.readlines()
+        for each in lines:
+            COUNTRY_SMELLS[SPELL_FILE].append(each.strip())
 
 parser = argparse.ArgumentParser(description="Clean a text file of any identifying Unicode characters")
 parser.add_argument('input', metavar='I', help='File to be cleaned')
@@ -51,6 +53,7 @@ with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
     lines = in_file.readlines()  # Read the lines into memory
     for index, line in enumerate(lines):  # Use enum so we can keep track of the lines
         line_to_display = line  # This will be the line presented to the user, to highlight what characters were hidden
+        # print(normalize("NFKC", line))
         for character in ZERO_WIDTH_CHARS:  # Checking starts here
             if ZERO_WIDTH_CHARS[character] in line:
                 display_line = True
@@ -76,9 +79,11 @@ with open(args.input, mode="r", encoding="UTF-8") as in_file:  # File to process
             else:
                 print(line_to_display.strip())
 
-        for word in COUNTRY_SMELLS:
-            if word in line.lower():  # Normalize
-                print("[!] WARNING - Use of spelling ({}) that identifies country on line {}".format(word, index+1))
+        for SPELLINGS in COUNTRY_SMELLS:
+            for word in COUNTRY_SMELLS[SPELLINGS]:
+                if word in line.lower():  # Normalize
+                    print("[!] WARNING - Use of spelling ({}) that identifies country on line {}".format(word, index+1))
+                    print("[*] GUESS OF COUNTRY: {}".format(SPELLINGS.split("_")[0]))
 
         lines[index] = line  # Update
 
