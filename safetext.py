@@ -6,7 +6,8 @@
 # Inspiration https://www.zachaysan.com/writing/2017-12-30-zero-width-characters
 # David Jacobson
 
-import argparse,sys
+import argparse
+import sys
 from characters_safetext import HOMOGLYPHS, ZERO_WIDTH_CHARS, NON_STANDARD_SPACES
 
 
@@ -15,15 +16,16 @@ def underline(chars):
         return "'{}'".format(chars)
     return '\033[4m' + chars + '\033[0m'
 
+
 def safe_windows_print(s):
         try:
             print(s)
         except UnicodeEncodeError as e:
             for c in s:
                 try:
-                    print(c, end = '')
+                    print(c, end='')
                 except UnicodeEncodeError as d:
-                    print('?', end = '')
+                    print('?', end='')
 
 
 # These are words that could fingerprint an author's location
