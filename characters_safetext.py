@@ -33,7 +33,7 @@ NON_STANDARD_SPACES = {  # These are not zero-width, they are visible. However, 
     "<> (IS)": u"\u3000",
 }
 # A list of letters that have identical counterparts from other character sets.
-# Please note that these are stored with reference to their english counterparts, i.e. CYRILLIC_b is not be the
+# Please note that these are stored with reference to their English counterparts, i.e. CYRILLIC_b is not be the
 # second letter of the Cyrillic alphabet, rather it is the Cyrillic character that most resembles the letter 'b'.
 # List built from https://en.wikipedia.org/wiki/IDN_homograph_attack + manual inspection of characters.
 HOMOGLYPHS = {  # To quickly verify that these characters are not Latin, enter them in Google with autocomplete.
